@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.div{
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.card{
+    width: calc(40% - 20px);
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    -webkit-transition: 2s ease;
+}
+
+
+.card:hover{
+    transform: scale(1.1);
+    background-color: rgb(119, 119, 233);
+    transition: .3s linear;
+}
+
+.image {
+    width: 200px;
+    height: 200px;
+
+}
+
+.card__title    {
+    margin-top: 10px;
+}
+
+h2  {
+    font-size: 20px;
+}
+
+p   {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 17px;
+    font-family: sans-serif;
+}
