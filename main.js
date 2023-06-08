@@ -1,59 +1,95 @@
-// function compare(number1, number2) {
-//     if(number1 < number2) {
-//         console.log('первое меньше. ха-ха-ха');
-//     }else if(number2 < number1) {
-//         console.log('второе число меньше. да ладно');
-//     }else console.log('оба числа равны. я так и знал!');
-// }
+const posts = document.querySelector(".posts");
+const button1 = document.getElementById("1");
+const button2 = document.getElementById("2");
+const button3 = document.getElementById("3");
+// let sort = "";
 
+const getData = (sort, page) => {
+  posts.innerHTML = "<div></div>";
+  fetch(
+    `https://jsonplaceholder.typicode.com/posts?_limit=10&_sort=${sort}&_order=desc&_page=${page}`,
+  )
+    .then(async (response) => await response.json())
+    .then(
+      async (json) =>
+        await json?.forEach((item) => {
+          const post = document.createElement("div");
+          post.className = "post";
+          post.innerHTML = `
+            <h2><span>${item.id}.</span> ${item.title.toUpperCase()}</h2>
+            <p>${item.body}</p>
+     `;
 
-// 2 задание 
+          posts.appendChild(post);
+        }),
+    );
+};
+getData();
+button1.addEventListener("click", (e) => {
+  //   sort = "id";
+  //   console.log(sort);
+  getData("id");
+});
 
+button2.addEventListener("click", () => {
+  //   sort = "name";
+  //   console.log(sort);
+  getData("name");
+});
+button3.addEventListener("click", () => {
+  //   sort = "body";
+  //   console.log(sort);
+  getData("body");
+});
 
-// console.log(compare(5,5));
-// console.log(compare(6,1));
+const list = document.createElement("ul");
+list.className = "pagination";
+document.body.appendChild(list);
 
-// function degree (num, degree) {
-//     return num**degree;
-//     return num**degree;
-// }
+Array.from(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]).forEach((item) => {
+  const listItem = document.createElement("li");
+  listItem.addEventListener("click", (e) => {
+    e.preventDefault();
+    getData("", item);
+  });
+  listItem.textContent = item;
+  listItem.className = "number";
+  list.appendChild(listItem);
+});
 
-// console.log(degree(3, 2));
+const post = 1; 
 
-// 3 задание    
+fetch(`https://jsonplaceholder.typicode.com/comments?postId=${post}`)
+  .then(response => response.json())
+  .then(comments => {
+    console.log(comments); 
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
-// const sumOfNumbers = (numbers) => {
-//  return numbers.reduce((a, b) => a + b)
-// }
-// console.log(sumOfNumbers([2, 3, 6, 3, 7]));
+  const commentsButton = document.getElementById('comments-button');
+  const commentsList = document.getElementById('comments-list');
+  const postId = 1;
 
-//доп задание 
+commentsButton.addEventListener('click', () => {
+  fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
+    .then(response => response.json())
+    .then(comments => {
 
-// 5 задание 
+      commentsList.innerHTML = '';
 
-// const bankAccount = {
-//     accountNumber: 0,
-//     balance: 0,
-//     sendTransfer: function (accountNumber, balance) {
-//         this.balance = balance
-//         this.accountNumber = accountNumber
-//     }
-// }
-
-// bankAccount.sendTransfer(45335654645, 20)
-// console.log(bankAccount.accountNumber, bankAccount.ba);
-
-//4 задание 
-
-//дополнительные
-
-// const user = {
-//     phoneNumber: '+996 504 140114',
-//     sms: 'Hello',
-//     sendTransfer: function (phoneNumber, sms) {
-//        console.log(phoneNumber, sms);
-//     }
-// }
-
-// console.log(user.sendTransfer('+996703406904', 'Darova zaibal)'));
-
+      commentsButton.innerHTML = '';
+      
+      comments.forEach(comment => {
+        const li = document.createElement('li');
+        li.innerText = comment.body;
+        commentsList.appendChild(li);
+      });
+      
+      commentsList.style.display = 'block';
+    })
+    .catch(error => {
+      console.error(error);
+    });
+});
